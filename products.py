@@ -28,6 +28,5 @@ class Product:
     def get_quantity(self):
         return self.__quantity
 
-
     def show(self):
         print(f"{self.__name}, Price: {self.__price}, Quantity: {self.__quantity}")
