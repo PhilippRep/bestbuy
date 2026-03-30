@@ -19,7 +19,7 @@ def list_all_products(store_obj):
     else:
         for prod in active_products:
             print(f"{counter}. ", end="")
-            prod.show()
+            print(prod.show())
             counter += 1
         print("------")
 
@@ -30,7 +30,7 @@ def show_total_amount(store_obj):
     total_quantity = store_obj.get_total_quantity()
     print(f"Total of {total_quantity} items in store")
 
-def make_an_order(store_obj, prod):
+def make_an_order(store_obj):
     """
     If now articles in the shop you get a message that you can´t take an order.
     otherwise get the articles from Store class and i can choose
@@ -51,7 +51,15 @@ def make_an_order(store_obj, prod):
                 how_many = input("What amount do you want? ")
                 if take_an_order == "" and how_many == "":
                     break
-                shopping_list.append((prod[(int(take_an_order)) - 1], (int(how_many))))
+                index = int(take_an_order) -1
+                if index < 0 or index >= len(active_products):
+                    print("Invalid product number")
+                    continue
+                quantity = int(how_many)
+                if quantity <= 0:
+                    print("Quantity must be greater than 0!")
+                    continue
+                shopping_list.append((active_products[index], (int(how_many))))
                 print("Product added to list!\n")
                 continue
             except ValueError:
@@ -60,7 +68,7 @@ def make_an_order(store_obj, prod):
         total_costs = store_obj.order(shopping_list)
         print(f"\nOrder made! Total payments: ${total_costs:.2f}")
 
-def start(store_obj, product_list):
+def start(store_obj):
     """Shows the start menu where the user can take a choice
     what want to see or to exit the program"""
     while True:
@@ -79,7 +87,7 @@ def start(store_obj, product_list):
                 show_total_amount(store_obj)
                 continue
             if choice == 3:
-                make_an_order(store_obj, product_list)
+                make_an_order(store_obj)
                 continue
             if choice == 4:
                 break
