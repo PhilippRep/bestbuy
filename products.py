@@ -48,9 +48,9 @@ class Product:
         if quantity < 0:
             raise ValueError("Value should be min. 0!")
         if quantity == 0:
-            self.__active = False
+            self.deactivate()
         elif quantity > 0:
-            self.__active = True
+            self.activate()
         self.__quantity = quantity
         return self.__quantity
 
